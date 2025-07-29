@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'max:255', 'email'],
-            'password' => ['required', 'string', 'min:8','confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
     public function messages()

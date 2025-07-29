@@ -8,29 +8,32 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 
+
 class UserController extends Controller
 {
-    public function index()
-    {
-        return view('auth.register');
-    }
-
 
     public function login(UserRequest $request)
     {
         $User = $request->only(['email','password']);
+        return view('index');
     }
 
     public function register(RegisterRequest $request)
     {
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         auth()->login($user);
 
-        return redirect('/mypage');
+        return redirect()->route('mypage_profile');
+    }
+
+    public function mypage()
+    {
+        return view('mypage_profile');
     }
 }
