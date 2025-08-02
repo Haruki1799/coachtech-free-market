@@ -18,14 +18,13 @@ use App\Models\Address;
 */
 
 
-Route::post('/login', [UserController::class, 'login']);
+Route::post('/login', [UserController::class, 'login'])->name('home');
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/mypage/profile', [UserController::class, 'mypage'])->name('mypage_profile');
 Route::post('/mypage/profile', [AddressController::class, 'store']);
 
 
-
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AuthController::class, 'index']);
+    Route::get('/', [AuthController::class, 'index'])->name('home');
 });
 
