@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -14,8 +15,16 @@ class UserController extends Controller
 
     public function login(UserRequest $request)
     {
-        $User = $request->only(['email','password']);
-        return view('index');
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'ログイン情報が登録されいません',
+        ]);
     }
 
     public function register(RegisterRequest $request)
