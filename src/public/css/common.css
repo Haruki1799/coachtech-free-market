@@ -55,6 +55,15 @@
     vertical-align: middle;
 }
 
+.header-nav__link--login {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    padding: 10px 16px;
+    vertical-align: middle;
+}
+
 .header-nav__button {
     border: none;
     background: transparent;
