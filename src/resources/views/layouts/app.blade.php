@@ -18,24 +18,40 @@
                 <a class="header__logo" href="/">
                     <img src="{{ asset('img/logo.svg') }}" alt="coachtech">
                 </a>
+
                 @if (!View::hasSection('hide-nav'))
                 <div class="header-search">
                     <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input">
                 </div>
+
                 <nav>
                     <ul class="header-nav">
+                        @auth
                         <li class="header-nav__item">
-                            <form class="form" action="/logout" method="post">
+                            <form class="form" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button class="header-nav__button">ログアウト</button>
                             </form>
                         </li>
                         <li class="header-nav__item">
-                            <a class="header-nav__link--mypage" href="/mypage">マイページ</a>
+                            <a class="header-nav__link--mypage" href="{{ route('mypage') }}">マイページ</a>
                         </li>
                         <li class="header-nav__item">
-                            <a class="header-nav__link--listing" href="/sell">出品</a>
+                            <a class="header-nav__link--listing" href="{{ route('sell') }}">出品</a>
                         </li>
+                        @endauth
+
+                        @guest
+                        <li class="header-nav__item">
+                            <a class="header-nav__link--login" href="{{ route('login') }}">ログイン</a>
+                        </li>
+                        <li class="header-nav__item">
+                            <a class="header-nav__link--mypage" href="{{ route('mypage') }}">マイページ</a>
+                        </li>
+                        <li class="header-nav__item">
+                            <a class="header-nav__link--listing" href="{{ route('sell') }}">出品</a>
+                        </li>
+                        @endguest
                     </ul>
                 </nav>
                 @endif

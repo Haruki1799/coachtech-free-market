@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\GoodsController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
+
+
 use App\Models\Address;
 
 /*
@@ -17,14 +22,24 @@ use App\Models\Address;
 |
 */
 
-
 Route::post('/login', [UserController::class, 'login'])->name('home');
 Route::post('/register', [UserController::class, 'register']);
+Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
 Route::get('/mypage/profile', [UserController::class, 'mypage'])->name('mypage_profile');
 Route::post('/mypage/profile', [AddressController::class, 'store']);
 
+Route::get('/sell', [ProductController::class, 'create'])->name('sell');
+
+Route::get('/', [GoodsController::class, 'index'])->name('home');
+Route::get('/item', [GoodsController::class, 'index']);
+Route::get('/item/{id}', [GoodsController::class, 'show'])->name('goods.show');
+Route::post('/item', [GoodsController::class, 'store'])->name('goods.store');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [AuthController::class, 'index'])->name('home');
+    Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
 });
 
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
