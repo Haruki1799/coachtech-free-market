@@ -17,11 +17,13 @@
 
         <div class="rating">⭐️</div>
 
-        <button class="purchase-btn">購入手続きへ</button>
+        <form action="{{ route('purchase.show', ['id' => $goods->id]) }}" method="GET">
+            <button type="submit" class="purchase-btn">購入手続きへ</button>
+        </form>
 
         <div class="description">
             <h3>商品説明</h3>
-            <div class="explanation">{{ $goods-> explanation}}</div>
+            <div class="explanation">{{ $goods->explanation }}</div>
         </div>
 
         <div class="info">
@@ -33,7 +35,7 @@
 
             <div class="condition-row">
                 <div class="condition-label">商品の状態：</div>
-                <div class="condition-name">{{ $goods-> condition}}</div>
+                <div class="condition-name">{{ $goods->condition }}</div>
             </div>
 
             <div class="comments">
@@ -48,4 +50,5 @@
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

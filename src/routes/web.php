@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -34,6 +35,11 @@ Route::get('/', [GoodsController::class, 'index'])->name('home');
 Route::get('/item', [GoodsController::class, 'index']);
 Route::get('/item/{id}', [GoodsController::class, 'show'])->name('goods.show');
 Route::post('/item', [GoodsController::class, 'store'])->name('goods.store');
+
+Route::get('/purchase/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
+Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
