@@ -25,9 +25,20 @@ use App\Models\Address;
 
 Route::post('/login', [UserController::class, 'login'])->name('home');
 Route::post('/register', [UserController::class, 'register']);
-Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
-Route::get('/mypage/profile', [UserController::class, 'mypage'])->name('mypage_profile');
-Route::post('/mypage/profile', [AddressController::class, 'store']);
+// Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
+Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
+Route::get('/mypage/profile', [AddressController::class, 'edit'])->name('mypage_profile.edit');
+Route::post('/mypage/profile', [AddressController::class, 'store'])->name('mypage_profile');
+
+Route::get('/mypage/profile', [UserController::class, 'mypage_profile'])->name('mypage_profile');
+// Route::post('/mypage/profile', [AddressController::class, 'store']);
+Route::get('/mypage/profile', [AddressController::class, 'edit'])->name('mypage.profile.edit');
+Route::get('/purchase/address/{item_id}', [AddressController::class, 'editForItem'])->name('address.edit.item');
+Route::post('/purchase/address/{item_id}', [AddressController::class, 'updateForItem'])->name('address.update.item');
+
+Route::get('/mypage/profile/edit', [AddressController::class, 'edit'])->name('address.edit.profile');
+Route::post('/mypage/profile/edit', [AddressController::class, 'store'])->name('address.update.profile');
+
 
 Route::get('/sell', [ProductController::class, 'create'])->name('sell');
 
@@ -38,6 +49,8 @@ Route::post('/item', [GoodsController::class, 'store'])->name('goods.store');
 
 Route::get('/purchase/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
 Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
+Route::post('/purchase/confirm/{item_id}', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
+
 
 
 

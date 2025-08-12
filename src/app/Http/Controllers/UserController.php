@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Good;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\RegisterRequest;
 
@@ -41,8 +42,17 @@ class UserController extends Controller
         return redirect()->route('mypage_profile');
     }
 
-    public function mypage()
+    public function mypage_profile()
     {
         return view('mypage_profile');
     }
+    public function mypage()
+    {
+        $goods = Good::where('user_id', Auth::id())->get();
+        $user = Auth::user()->load('address');
+
+
+        return view('mypage', compact('goods', 'user'));
+    }
 }
+
