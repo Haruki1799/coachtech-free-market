@@ -19,4 +19,12 @@ class PurchaseController extends Controller
 
         return redirect()->route('mypage')->with('success', '購入が完了しました！');
     }
+
+    public function confirm(Request $request, $item_id)
+    {
+        $goods = Goods::findOrFail($item_id);
+        $address = $request->input('address');
+        
+        return view('purchase_confirm', compact('goods', 'address'));
+    }
 }

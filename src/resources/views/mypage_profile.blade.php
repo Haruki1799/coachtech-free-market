@@ -13,14 +13,14 @@
 
 
 
-    <form class="form" action="/mypage/profile" method="post">
+    <form class="form" action="/mypage/profile" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form__group">
             <div class="profile-image-section">
                 <img src="placeholder.jpg" alt="プロフィール画像" class="profile-image">
                 <label class="image-upload-label">
                     画像を選択する
-                    <input type="file" hidden>
+                    <input type="file" name="profile_image" hidden>
                 </label>
             </div>
             <div class="form__group-title">
@@ -28,7 +28,8 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="name" value="{{ old('name') }}" />
+                    <input type="text" name="name" value="{{ old('name', $user->name ?? '') }}" />
+
                 </div>
                 <div class="form__error">
                     @error('name')
@@ -43,7 +44,7 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="post_code" value="{{ old('post_code') }}" />
+                    <input type="text" name="post_code" value="{{ old('post_code', $address->post_code ?? '') }}" />
                 </div>
                 <div class="form__error">
                     @error('post_code')
@@ -58,7 +59,7 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="address" />
+                    <input type="text" name="address" value="{{ old('address', $address->address ?? '') }}" />
                 </div>
                 <div class="form__error">
                     @error('address')
@@ -73,7 +74,7 @@
             </div>
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="building" />
+                    <input type="text" name="building" value="{{ old('building', $address->building ?? '') }}" />
                 </div>
             </div>
         </div>

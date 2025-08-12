@@ -17,9 +17,9 @@
 
         <div class="rating">⭐️</div>
 
-        <form action="{{ route('purchase.show', ['id' => $goods->id]) }}" method="GET">
-            <button type="submit" class="purchase-btn">購入手続きへ</button>
-        </form>
+        <a href="{{ route('purchase.show', ['id' => $goods->id]) }}" class="purchase-btn">
+            購入手続きへ
+        </a>
 
         <div class="description">
             <h3>商品説明</h3>
