@@ -34,5 +34,9 @@ class Good extends Model
     {
         return $this->hasMany(Order::class);
     }
-    
+
+    public function getIsSoldAttribute()
+    {
+        return $this->attributes['is_sold'];
+    }
 }
