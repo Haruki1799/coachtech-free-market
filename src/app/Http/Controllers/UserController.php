@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Good;
+use App\Models\Order;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\RegisterRequest;
 
@@ -46,13 +47,29 @@ class UserController extends Controller
     {
         return view('mypage_profile');
     }
-    public function mypage()
+    public function mypage(Request $request)
     {
-        $goods = Good::where('user_id', Auth::id())->get();
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors(['auth' => 'ログインしてください']);
+        }
+
         $user = Auth::user()->load('address');
+        $page = $request->input('page');
 
+        if ($page === 'mylist') {
+            $orders = Order::with('goods')
+                ->where('user_id', Auth::id())
+                ->latest()
+                ->get();
 
-        return view('mypage', compact('goods', 'user'));
+            $goods = $orders->pluck('goods')->filter(function ($good) {
+                return $good && $good->is_sold;
+            });
+        } else {
+            $goods = Good::where('user_id', Auth::id())->get();
+        }
+
+        return view('mypage', compact('user', 'goods'));
     }
 }
 

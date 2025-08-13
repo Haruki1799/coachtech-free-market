@@ -15,7 +15,7 @@ class GoodsTableSeeder extends Seeder
     public function run()
     {
         $param = [
-            'user_id' => 1,
+            'user_id' => 2,
             'item' => '腕時計',
             'price' => 15000,
             'brand_name' => 'test',

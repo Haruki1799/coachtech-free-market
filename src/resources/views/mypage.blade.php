@@ -15,8 +15,8 @@
 </div>
 
 <div class="tabs">
-    <a href="{{ route('home') }}" class="tab {{ request('page') !== 'mylist' ? 'active' : '' }}">出品した商品</a>
-    <a href="{{ route('home', ['page' => 'mylist']) }}" class="tab {{ request('page') === 'mylist' ? 'active' : '' }}">購入した商品</a>
+    <a href="{{ route('mypage') }}" class="tab {{ request('page') !== 'mylist' ? 'active' : '' }}">出品した商品</a>
+    <a href="{{ route('mypage', ['page' => 'mylist']) }}" class="tab {{ request('page') === 'mylist' ? 'active' : '' }}">購入した商品</a>
 </div>
 
 

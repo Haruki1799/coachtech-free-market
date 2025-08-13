@@ -22,4 +22,9 @@ class Goods extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function isSold()
+    {
+        return $this->is_sold;
+    }
 }

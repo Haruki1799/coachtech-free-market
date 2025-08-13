@@ -16,7 +16,12 @@
     @foreach($goods as $item)
     <div class="goods-card">
         <a href="{{ route('goods.show', $item->id) }}">
-            <div class="goods-image"><img src="{{ $item->image_url }}" alt="{{ $item->item }}"></div>
+            <div class="goods-image">
+                <img src="{{ $item->image_url }}" alt="{{ $item->item }}">
+                @if($item->isSold())
+                <div class="sold-label">SOLD</div>
+                @endif
+            </div>
             <div class="goods-name">{{ $item->item }}</div>
         </a>
     </div>
