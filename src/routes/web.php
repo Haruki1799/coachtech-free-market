@@ -47,7 +47,7 @@ Route::post('/item', [GoodsController::class, 'store'])->name('goods.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/purchase/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
-    Route::post('/purchase/{item_id}/confirm', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'confirm'])->name('purchase.confirm');
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
 });
 
