@@ -20,18 +20,15 @@ class AddressController extends Controller
 
         $user = Auth::user();
 
-        // ユーザー名は users テーブルに保存
         $user->update([
             'name' => $request->input('name'),
         ]);
 
-        // 画像保存（任意）
         $path = $user->address->profile_image ?? null;
         if ($request->hasFile('profile_image')) {
             $path = $request->file('profile_image')->store('profile_images', 'public');
         }
 
-        // 住所情報は addresses テーブルに保存
         $user->address()->updateOrCreate([], [
             'post_code' => $request->input('post_code'),
             'address' => $request->input('address'),
@@ -59,20 +56,18 @@ class AddressController extends Controller
 
     public function updateForItem(Request $request, $item_id)
     {
-        $validated = $request->validate([
-            'post_code' => 'required|string|max:10',
-            'address'   => 'required|string|max:255',
-            'building'  => 'nullable|string|max:255',
-        ]);
+        $post_code = $request->input('post_code');
+        $address   = $request->input('address');
+        $building  = $request->input('building');
 
-        Address::updateOrCreate(
-            ['user_id' => auth()->id()],
-            [
-                'post_code' => $validated['post_code'],
-                'address'   => $validated['address'],
-                'building'  => $validated['building'],
+        // セッションに一時保存
+        session([
+            'temp_address' => [
+                'post_code' => $post_code,
+                'address'   => $address,
+                'building'  => $building,
             ]
-        );
+        ]);
 
         return redirect()->route('purchase.confirm', ['item_id' => $item_id]);
     }

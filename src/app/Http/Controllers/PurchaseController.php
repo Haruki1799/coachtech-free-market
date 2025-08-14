@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Goods;
 use App\Models\Order;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\PurchaseRequest;
 
 class PurchaseController extends Controller
 {
@@ -22,7 +24,7 @@ class PurchaseController extends Controller
         return view('purchase_confirm', compact('goods', 'address'));
     }
 
-    public function store(Request $request, $item_id)
+    public function store(PurchaseRequest $request, $item_id)
     {
 
         $request->validate([
@@ -49,6 +51,16 @@ class PurchaseController extends Controller
         $goods->is_sold = true;
         $goods->save();
 
+        $temp = session('temp_address');
+
+        if ($temp) {
+            Address::updateOrCreate(
+                ['user_id' => auth()->id()],
+                $temp
+            );
+        }
+
+        session()->forget('temp_address');
 
         return redirect()->route('home');
     }
