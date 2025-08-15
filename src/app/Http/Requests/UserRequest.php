@@ -34,6 +34,7 @@ class UserRequest extends FormRequest
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレスは「ユーザー名＠ドメイン」形式で入力してください',
             'password.required' => 'パスワードを入力してください',
+            'password.min' => 'パスワードは８文字以上で入力してください',
         ];
     }
 }

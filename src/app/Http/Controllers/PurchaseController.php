@@ -16,20 +16,16 @@ class PurchaseController extends Controller
         return view('purchase', compact('goods'));
     }
 
-    public function confirm(Request $request, $item_id)
+    public function confirm($item_id)
     {
         $goods = Goods::findOrFail($item_id);
-        $address = $request->input('address');
-        
-        return view('purchase_confirm', compact('goods', 'address'));
+        $address = session('temp_address') ?? Auth::user()->address;
+
+        return redirect()->route('purchase.complete');
     }
 
     public function store(PurchaseRequest $request, $item_id)
     {
-
-        $request->validate([
-            'payment' => 'required|in:convenience,credit',
-        ]);
 
         $goods = Goods::findOrFail($item_id);
         $user = Auth::user();
@@ -37,6 +33,17 @@ class PurchaseController extends Controller
         if (!$user->address) {
             return back()->withErrors(['address' => '住所が登録されていません']);
         }
+
+        $validated = $request->validated();
+
+        Address::updateOrCreate(
+            ['user_id' => auth()->id()],
+            [
+                'post_code' => $validated['post_code'],
+                'address' => $validated['address'],
+                'building' => $validated['building'] ?? null,
+            ]
+        );
 
         Order::create([
             'user_id' => $user->id,
@@ -46,7 +53,6 @@ class PurchaseController extends Controller
             'address' => $user->address->address,
             'building' => $user->address->building,
         ]);
-
 
         $goods->is_sold = true;
         $goods->save();
