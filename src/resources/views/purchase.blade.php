@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('purchase.store', ['item_id' => $goods->id]) }}" method="POST" novalidate>
+<form action="{{ route('purchase.store', $goods->id) }}" method="POST" novalidate>
     @csrf
 
     <div class="purchase-page">
@@ -29,11 +29,9 @@
                         <option value="convenience">コンビニ支払い</option>
                         <option value="credit">カード支払い</option>
                     </select>
-                    <div class="form__error">
-                        @error('payment')
-                        {{ $message }}
-                        @enderror
-                    </div>
+                    @error('payment')
+                    <div class="form__error">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group delivery-section">
@@ -42,34 +40,34 @@
                         @php
                         $temp = session('temp_address');
                         $address = $temp ?? Auth::user()->address;
+                        $post_code = $address['post_code'] ?? $address->post_code ?? '';
+                        $main_address = $address['address'] ?? $address->address ?? '';
+                        $building = $address['building'] ?? $address->building ?? '';
                         @endphp
 
-                        @if($address)
+                        @if($post_code && $main_address)
                         <div class="address-line">
                             <span class="address-label">〒</span>
-                            <span class="address-value">{{ $address['post_code'] ?? $address->post_code }}</span>
+                            <span class="address-value">{{ $post_code }}</span>
                             <a href="{{ route('address.edit.item', ['item_id' => $goods->id]) }}" class="change-address-inline">住所変更</a>
                         </div>
                         <div class="address-line">
                             <span class="address-label">住所</span>
                             <span class="address-value">
-                                {{ $address['address'] ?? $address->address }}
-                                {{ $address['building'] ?? $address->building ?? '' }}
+                                {{ $main_address }}
+                                @if(!empty($building))
+                                {{ $building }}
+                                @endif
                             </span>
                         </div>
+
+                        <input type="hidden" name="post_code" value="{{ $post_code }}">
+                        <input type="hidden" name="address" value="{{ $main_address }}">
+                        <input type="hidden" name="building" value="{{ $building }}">
                         @else
                         <div class="form__error">
-                            @error('post_code')
-                            {{ $message }}
-                            @enderror
-
-                            @error('address')
-                            {{ $message }}
-                            @enderror
-
-                            @error('building')
-                            {{ $message }}
-                            @enderror
+                            @error('post_code') {{ $message }} @enderror
+                            @error('address') {{ $message }} @enderror
                         </div>
                         <a href="{{ route('address.edit.item', ['item_id' => $goods->id]) }}" class="change-address-inline">住所変更</a>
                         @endif

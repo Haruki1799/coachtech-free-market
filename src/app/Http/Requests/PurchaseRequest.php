@@ -27,7 +27,6 @@ class PurchaseRequest extends FormRequest
             'payment' => 'required|in:convenience,credit',
             'post_code' => 'required|string|max:10',
             'address'   => 'required|string|max:255',
-            'building'  => 'nullable|string|max:255',
         ];
     }
     public function messages()
