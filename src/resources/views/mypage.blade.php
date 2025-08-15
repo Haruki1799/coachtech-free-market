@@ -7,9 +7,13 @@
 @section('content')
 
 <div class="profile-section">
-    <img src="{{ asset('storage/' . optional($user->address)->profile_image) }}" alt="プロフィール画像">
-    alt="プロフィール画像"
-    class="profile-image">
+    <div class="profile-image-wrapper">
+        <img src="{{ asset('storage/' . optional($user->address)->profile_image) }}"
+            alt="プロフィール画像"
+            class="profile-image"
+            id="preview-image">
+    </div>
+
     <h2 class="username">{{ Auth::user()->name }}</h2>
     <a href="{{ route('address.edit.profile') }}" class="edit-button">プロフィールを編集</a>
 </div>
