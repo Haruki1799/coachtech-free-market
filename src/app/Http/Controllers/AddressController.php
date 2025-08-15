@@ -29,14 +29,19 @@ class AddressController extends Controller
             $path = $request->file('profile_image')->store('profile_images', 'public');
         }
 
-        $user->address()->updateOrCreate([], [
-            'post_code' => $request->input('post_code'),
-            'address' => $request->input('address'),
-            'building' => $request->input('building'),
-            'profile_image' => $path,
-        ]);
+        $user->address()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'post_code' => $request->input('post_code'),
+                'address' => $request->input('address'),
+                'building' => $request->input('building'),
+                'profile_image' => $path,
+                'user_name' => $user->name,
+            ]
+        );
 
-        return redirect('/');
+
+        return redirect('/mypage');
     }
 
     public function edit()
@@ -60,16 +65,15 @@ class AddressController extends Controller
         $address   = $request->input('address');
         $building  = $request->input('building');
 
-        // セッションに一時保存
         session([
             'temp_address' => [
                 'post_code' => $post_code,
                 'address'   => $address,
                 'building'  => $building,
+                'user_name'  => Auth::user()->name,
             ]
         ]);
 
         return redirect()->route('purchase.confirm', ['item_id' => $item_id]);
     }
-
 }
