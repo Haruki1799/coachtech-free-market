@@ -27,4 +27,9 @@ class Goods extends Model
     {
         return $this->is_sold;
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'goods_id');
+    }
 }
