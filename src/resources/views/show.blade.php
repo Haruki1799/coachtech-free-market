@@ -15,7 +15,26 @@
         <p class="brand">{{ $goods->brand_name }}</p>
         <p class="price">¥{{ number_format($goods->price) }} <span>税込</span></p>
 
-        <div class="rating">⭐️</div>
+        <div class="like-section">
+            @auth
+            @if($goods->likes->contains('user_id', auth()->id()))
+            <form action="{{ route('likes.destroy', $goods->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="like-btn liked">⭐️</button>
+            </form>
+            @else
+            <form action="{{ route('likes.store', $goods->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="like-btn">☆</button>
+            </form>
+            @endif
+            @else
+            <button type="button" class="like-btn disabled-btn" disabled>☆</button>
+            @endauth
+
+            <div class="like-count">{{ $goods->likes_count }}</div>
+        </div>
 
         <a href="{{ route('purchase.show', ['id' => $goods->id]) }}" class="purchase-btn">
             購入手続きへ

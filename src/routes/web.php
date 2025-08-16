@@ -7,6 +7,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -60,3 +61,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+
+Route::post('/goods/{goods}/like', [LikeController::class, 'store'])->name('likes.store');
+Route::delete('/goods/{goods}/like', [LikeController::class, 'destroy'])->name('likes.destroy');

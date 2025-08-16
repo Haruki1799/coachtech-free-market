@@ -13,6 +13,7 @@ class PurchaseController extends Controller
     public function show($id)
     {
         $goods = Goods::findOrFail($id);
+        $goods = Goods::with('likes')->findOrFail($id);
         return view('purchase', compact('goods'));
     }
 

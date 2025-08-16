@@ -10,13 +10,28 @@ class GoodsController extends Controller
 
     public function index()
     {
-        $goods = Goods::all(); // すべての商品を取得
+        if (request('page') === 'mylist') {
+            $goods = Goods::whereHas('likes', function ($q) {
+                $q->where('user_id', auth()->id());
+            })
+                ->withCount('likes')
+                ->latest()
+                ->get();
+        } else {
+            $goods = Goods::withCount('likes')
+                ->latest()
+                ->get();
+        }
+
         return view('index', compact('goods'));
     }
 
     public function show($id)
     {
-        $goods = Goods::with('category')->findOrFail($id);
+        $goods = Goods::with(['category', 'likes'])
+                        ->withCount('likes')
+                        ->findOrFail($id);
+
         return view('show', compact('goods'));
     }
 }
