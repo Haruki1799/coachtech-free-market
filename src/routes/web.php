@@ -8,6 +8,7 @@ use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -64,3 +65,7 @@ Route::post('/logout', function () {
 
 Route::post('/goods/{goods}/like', [LikeController::class, 'store'])->name('likes.store');
 Route::delete('/goods/{goods}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
+
+Route::post('/goods/{goods}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.store');

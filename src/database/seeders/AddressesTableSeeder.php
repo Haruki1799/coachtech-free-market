@@ -20,7 +20,7 @@ class AddressesTableSeeder extends Seeder
             'post_code' => '123-4567',
             'address' => "東京都新宿1-2-3",
             'building' => 'test102',
-            'profile_image' => '/Users/kobayashiharuki/coachtech/laravel/coachtech-free-market/profile_image.JPG',
+            'profile_image' => 'profile_images/88aDq9DTDE48M10MVMKUFSrUdynZPjYNV9zdn0q9.jpg',
         ];
         DB::table('addresses')->insert($param);
     }
