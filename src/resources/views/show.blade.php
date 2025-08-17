@@ -15,25 +15,33 @@
         <p class="brand">{{ $goods->brand_name }}</p>
         <p class="price">¥{{ number_format($goods->price) }} <span>税込</span></p>
 
-        <div class="like-section">
-            @auth
-            @if($goods->likes->contains('user_id', auth()->id()))
-            <form action="{{ route('likes.destroy', $goods->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="like-btn liked">⭐️</button>
-            </form>
-            @else
-            <form action="{{ route('likes.store', $goods->id) }}" method="POST">
-                @csrf
-                <button type="submit" class="like-btn">☆</button>
-            </form>
-            @endif
-            @else
-            <button type="button" class="like-btn disabled-btn" disabled>☆</button>
-            @endauth
+        <div class="reaction-section">
+            {{-- いいね --}}
+            <div class="reaction-block">
+                @auth
+                @if($goods->likes->contains('user_id', auth()->id()))
+                <form action="{{ route('likes.destroy', $goods->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="reaction-icon liked">⭐️</button>
+                </form>
+                @else
+                <form action="{{ route('likes.store', $goods->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="reaction-icon">☆</button>
+                </form>
+                @endif
+                @else
+                <button type="button" class="reaction-icon disabled-btn" disabled>☆</button>
+                @endauth
+                <div class="reaction-count">{{ $goods->likes_count }}</div>
+            </div>
 
-            <div class="like-count">{{ $goods->likes_count }}</div>
+            {{-- コメント --}}
+            <div class="reaction-block">
+                <div class="reaction-icon">💬</div>
+                <div class="reaction-count">{{ $goods->comments_count }}</div>
+            </div>
         </div>
 
         <a href="{{ route('purchase.show', ['id' => $goods->id]) }}" class="purchase-btn">
@@ -58,12 +66,26 @@
             </div>
 
             <div class="comments">
-                <h3>コメント (1)</h3>
-                <div class="comment">
-                    <strong>admin:</strong>
+                <h3>コメント ({{ $goods->comments_count }})</h3>
+
+                @foreach($goods->comments as $comment)
+                <div class="comment-block">
+                    <div class="comment-header">
+                        <img src="{{ asset('storage/' . optional($comment->user->address)->profile_image) }}"
+                            alt="プロフィール画像"
+                            class="profile-img">
+                        <span class="username">{{ $comment->user->name }}</span>
+                    </div>
+                    <div class="comment-body">
+                        {{ $comment->body }}
+                    </div>
                 </div>
-                <form class="comment-form">
-                    <textarea placeholder="商品のコメント"></textarea>
+                @endforeach
+
+                <h3>商品へのコメント</h3>
+                <form action="{{ route('comments.store', $goods->id) }}" class="comment-form" method="POST">
+                    @csrf
+                    <textarea name="body" required>{{ old('body') }}</textarea>
                     <button type="submit">コメントを送信する</button>
                 </form>
             </div>

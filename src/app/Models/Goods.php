@@ -32,4 +32,10 @@ class Goods extends Model
     {
         return $this->hasMany(Like::class, 'goods_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'goods_id');
+    }
 }
+

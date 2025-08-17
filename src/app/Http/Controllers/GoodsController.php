@@ -28,9 +28,13 @@ class GoodsController extends Controller
 
     public function show($id)
     {
-        $goods = Goods::with(['category', 'likes'])
-                        ->withCount('likes')
-                        ->findOrFail($id);
+        $goods = Goods::with([
+            'category',
+            'likes',
+            'comments.user.address'
+        ])
+            ->withCount(['likes', 'comments'])
+            ->findOrFail($id);
 
         return view('show', compact('goods'));
     }

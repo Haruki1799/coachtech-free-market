@@ -108,32 +108,75 @@
     border-radius: 6px;
     cursor: pointer;
 }
-.like-section {
+
+.reaction-section {
+    display: flex;
+    gap: 24px;
+    margin-top: 12px;
+}
+
+.reaction-block {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    align-items: center;
+    width: 48px;
 }
 
-.like-btn {
+.reaction-icon {
+    font-size: 24px;
     background: none;
     border: none;
-    font-size: 24px;
     cursor: pointer;
-    padding: 0;
-    line-height: 1;
 }
 
-.like-btn.liked {
+.liked {
     color: gold;
 }
 
-.like-count {
+.disabled-btn {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.reaction-count {
     font-size: 14px;
     color: #555;
+    margin-top: 4px;
 }
+
 .disabled-btn {
     cursor: not-allowed;
     opacity: 0.5;
     pointer-events: none;
+}
+
+.comment-block {
+    margin-bottom: 16px;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-body {
+    font-size: 14px;
+    color: #444;
+    padding-left: 40px;
 }
