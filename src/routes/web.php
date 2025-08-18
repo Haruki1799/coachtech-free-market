@@ -69,3 +69,5 @@ Route::delete('/goods/{goods}/like', [LikeController::class, 'destroy'])->name('
 Route::post('/goods/{goods}/comments', [CommentController::class, 'store'])
     ->middleware('auth')
     ->name('comments.store');
+
+Route::get('/search', [ProductController::class, 'search'])->name('search');

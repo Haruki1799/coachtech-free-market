@@ -21,7 +21,11 @@
 
                 @if (!View::hasSection('hide-nav'))
                 <div class="header-search">
-                    <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input">
+                    <form id="search-form" action="{{ route('search') }}" method="GET">
+                        <input type="text" name="keyword" placeholder="なにをお探しですか？" class="search-input" id="search-input"
+                            value="{{ request('keyword') }}">
+                        <input type="hidden" name="page" value="{{ request('page') }}">
+                    </form>
                 </div>
 
                 <nav>

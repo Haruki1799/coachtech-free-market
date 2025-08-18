@@ -16,7 +16,6 @@
         <p class="price">¥{{ number_format($goods->price) }} <span>税込</span></p>
 
         <div class="reaction-section">
-            {{-- いいね --}}
             <div class="reaction-block">
                 @auth
                 @if($goods->likes->contains('user_id', auth()->id()))
@@ -37,7 +36,6 @@
                 <div class="reaction-count">{{ $goods->likes_count }}</div>
             </div>
 
-            {{-- コメント --}}
             <div class="reaction-block">
                 <div class="reaction-icon">💬</div>
                 <div class="reaction-count">{{ $goods->comments_count }}</div>
