@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddressRequest;
 use App\Models\Address;
-use App\Models\Goods;
+use App\Models\Good;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +17,6 @@ class AddressController extends Controller
 
     public function store(AddressRequest $request)
     {
-
         $user = Auth::user();
 
         $user->update([
@@ -40,7 +39,6 @@ class AddressController extends Controller
             ]
         );
 
-
         return redirect('/mypage');
     }
 
@@ -54,9 +52,9 @@ class AddressController extends Controller
 
     public function editForItem($item_id)
     {
-        $goods = Goods::findOrFail($item_id);
+        $good = Good::findOrFail($item_id);
 
-        return view('address_edit', compact('goods'));
+        return view('address_edit', compact('good'));
     }
 
     public function updateForItem(Request $request, $item_id)
@@ -70,7 +68,7 @@ class AddressController extends Controller
                 'post_code' => $post_code,
                 'address'   => $address,
                 'building'  => $building,
-                'user_name'  => Auth::user()->name,
+                'user_name' => Auth::user()->name,
             ]
         ]);
 

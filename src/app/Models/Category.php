@@ -11,6 +11,6 @@ class Category extends Model
 
     public function goods()
     {
-        return $this->hasMany(Goods::class);
+        return $this->belongsToMany(Good::class);
     }
 }

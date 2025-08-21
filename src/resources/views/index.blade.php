@@ -25,16 +25,16 @@
 @endif
 
 <div class="goods-list">
-    @foreach($goods as $item)
+    @foreach($goods as $good)
     <div class="goods-card">
-        <a href="{{ route('goods.show', $item->id) }}">
+        <a href="{{ route('goods.show', $good->id) }}">
             <div class="goods-image">
-                <img src="{{ $item->image_url }}" alt="{{ $item->item }}">
-                @if($item->isSold())
+                <img src="{{ $good->image_url }}" alt="{{ $good->item }}">
+                @if($good->isSold())
                 <div class="sold-label">SOLD</div>
                 @endif
             </div>
-            <div class="goods-name">{{ $item->item }}</div>
+            <div class="goods-name">{{ $good->item }}</div>
         </a>
     </div>
     @endforeach

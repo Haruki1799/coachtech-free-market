@@ -5,19 +5,19 @@
 @endsection
 
 @section('content')
-<form action="{{ route('purchase.store', $goods->id) }}" method="POST" novalidate>
+<form action="{{ route('purchase.store', $good->id) }}" method="POST" novalidate>
     @csrf
 
     <div class="purchase-page">
         <div class="purchase-left">
             <div class="product-section">
                 <div class="product-image">
-                    <img src="{{ $goods->image_url ?? '/images/placeholder.png' }}" alt="商品画像">
+                    <img src="{{ $good->image_url ?? '/images/placeholder.png' }}" alt="商品画像">
                 </div>
 
                 <div class="product-info">
-                    <h2 class="product-name">{{ $goods->item }}</h2>
-                    <p class="product-price">¥{{ number_format($goods->price) }}</p>
+                    <h2 class="product-name">{{ $good->item }}</h2>
+                    <p class="product-price">¥{{ number_format($good->price) }}</p>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                         <div class="address-line">
                             <span class="address-label">〒</span>
                             <span class="address-value">{{ $post_code }}</span>
-                            <a href="{{ route('address.edit.item', ['item_id' => $goods->id]) }}" class="change-address-inline">住所変更</a>
+                            <a href="{{ route('address.edit.item', ['item_id' => $good->id]) }}" class="change-address-inline">住所変更</a>
                         </div>
                         <div class="address-line">
                             <span class="address-label">住所</span>
@@ -69,7 +69,7 @@
                             @error('post_code') {{ $message }} @enderror
                             @error('address') {{ $message }} @enderror
                         </div>
-                        <a href="{{ route('address.edit.item', ['item_id' => $goods->id]) }}" class="change-address-inline">住所変更</a>
+                        <a href="{{ route('address.edit.item', ['item_id' => $good->id]) }}" class="change-address-inline">住所変更</a>
                         @endif
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <table class="summary-table">
                 <tr>
                     <td>商品代金</td>
-                    <td>¥{{ number_format($goods->price) }}</td>
+                    <td>¥{{ number_format($good->price) }}</td>
                 </tr>
                 <tr>
                     <td>支払い方法</td>

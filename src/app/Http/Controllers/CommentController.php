@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Goods;
+use App\Models\Good;
 use App\Models\Comment;
 use App\Http\Requests\CommentRequest;
 
@@ -13,10 +13,10 @@ class CommentController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(CommentRequest $request, Goods $goods)
+    public function store(CommentRequest $request, Good $good)
     {
         Comment::create([
-            'goods_id' => $goods->id,
+            'goods_id' => $good->id,
             'user_id' => auth()->id(),
             'body' => $request->body,
         ]);

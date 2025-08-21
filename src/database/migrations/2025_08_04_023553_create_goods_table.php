@@ -22,7 +22,6 @@ class CreateGoodsTable extends Migration
             $table->string('explanation', 255);
             $table->text('image_url');
             $table->string('condition', 255);
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Goods;
+use App\Models\Good;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,7 +11,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('sell', compact('categories'));
+        $good = new Good();
+        return view('sell', compact('categories', 'good'));
     }
 
     public function search(Request $request)
@@ -19,7 +20,7 @@ class ProductController extends Controller
         $keyword = trim($request->input('keyword'));
         $page = $request->input('page');
 
-        $query = Goods::query();
+        $query = Good::query();
 
         if ($keyword !== '') {
             $query->where('item', 'like', "%{$keyword}%");

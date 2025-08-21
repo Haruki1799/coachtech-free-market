@@ -17,7 +17,6 @@ class Good extends Model
         'explanation',
         'image_url',
         'condition',
-        'category_id',
     ];
 
     public function user()
@@ -25,18 +24,32 @@ class Good extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'goods_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'goods_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_good', 'goods_id', 'category_id');
+    }
+
     public function getIsSoldAttribute()
     {
         return $this->attributes['is_sold'];
+    }
+    public function isSold(): bool
+    {
+        return (bool) $this->is_sold;
     }
 }

@@ -63,11 +63,13 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-Route::post('/goods/{goods}/like', [LikeController::class, 'store'])->name('likes.store');
-Route::delete('/goods/{goods}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
+Route::post('/goods/{good}/like', [LikeController::class, 'store'])->name('likes.store');
+Route::delete('/goods/{good}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
 
-Route::post('/goods/{goods}/comments', [CommentController::class, 'store'])
+Route::post('/goods/{good}/comments', [CommentController::class, 'store'])
     ->middleware('auth')
     ->name('comments.store');
 
 Route::get('/search', [ProductController::class, 'search'])->name('search');
+
+Route::post('/', [GoodsController::class, 'store'])->name('goods.store');

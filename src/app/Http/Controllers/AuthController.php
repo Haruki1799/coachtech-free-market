@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Goods;
 
+use App\Models\Good;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +14,12 @@ class AuthController extends Controller
 
         if ($page === 'mylist') {
             // ログインユーザーの商品だけを取得
-            $goods = Goods::where('user_id', auth()->id())->get();
+            $goods = Good::where('user_id', auth()->id())->get();
         } else {
             // デフォルト：全商品を取得
-            $goods = Goods::all();
+            $goods = Good::all();
         }
 
         return view('dashboard.index', compact('goods', 'page'));
     }
-
 }
