@@ -1,3 +1,4 @@
+/* コンテナ全体 */
 .container {
     max-width: 600px;
     margin: 40px auto;
@@ -6,21 +7,27 @@
     border-radius: 8px;
 }
 
-h2 {
+/* 見出し */
+h1 {
     text-align: center;
     margin-bottom: 30px;
+    color: #333;
 }
 
+/* フォームグループ */
 .form-group {
     margin-bottom: 20px;
 }
 
+/* ラベル */
 label {
     display: block;
     font-weight: bold;
     margin-bottom: 6px;
+    color: #444;
 }
 
+/* 入力フィールド */
 input[type="text"],
 input[type="number"],
 select,
@@ -29,14 +36,74 @@ textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
+/* テキストエリア */
+textarea {
+    resize: vertical;
+}
+
+/* 価格入力 */
 .price-input {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
+/* 通貨記号 */
+.price-input span {
+    font-size: 16px;
+    color: #555;
+}
+
+.product_information {
+    position: relative;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+}
+
+/* 画像アップロードセクション */
+.product-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* プレビュー画像 */
+.product-image {
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* アップロードボタン */
+.image-upload-label {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: white;
+    color: red;
+    border-radius: 6px;
+    border: 2px solid red;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.image-upload-label:hover {
+    background-color: red;
+    color: white;
+}
+
+/* 出品ボタン */
 .submit-button {
     background-color: #e60000;
     color: white;
@@ -45,4 +112,50 @@ textarea {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #cc0000;
+}
+
+.category-container {
+    margin-bottom: 30px;
+}
+
+.category-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #fff;
+    color: red;
+    border: 2px solid red;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.category-tag:hover {
+    background-color: red;
+    color: white;
+}
+
+.category-tag.selected {
+    background-color: red;
+    color: white;
 }

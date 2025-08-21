@@ -2,41 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Goods;
-
+use App\Models\Good;
 use Illuminate\Http\Request;
+use App\Http\Requests\ExhibitionRequest;
 
 class GoodsController extends Controller
 {
-
-    public function index()
+    public function index(Request $request)
     {
-        if (request('page') === 'mylist') {
-            $goods = Goods::whereHas('likes', function ($q) {
-                $q->where('user_id', auth()->id());
-            })
-                ->withCount('likes')
-                ->latest()
-                ->get();
-        } else {
-            $goods = Goods::withCount('likes')
-                ->latest()
-                ->get();
+        $page = $request->query('page');
+        $keyword = trim($request->query('keyword'));
+
+        $query = Good::query()->withCount(['likes', 'comments']);
+
+        if ($keyword !== '') {
+            $query->where('item', 'like', "%{$keyword}%");
         }
+
+        if ($page === 'mylist') {
+            $query->whereHas('likes', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
+        }
+
+        $goods = $query->latest()->get();
 
         return view('index', compact('goods'));
     }
 
     public function show($id)
     {
-        $goods = Goods::with([
-            'category',
+        $good = Good::with([
+            'categories',
             'likes',
             'comments.user.address'
         ])
             ->withCount(['likes', 'comments'])
             ->findOrFail($id);
 
-        return view('show', compact('goods'));
+        return view('show', compact('good'));
+    }
+
+    public function store(ExhibitionRequest $request)
+    {
+        $validated = $request->validated();
+
+        $imagePath = $request->file('image')->store('goods', 'public');
+
+        $good = new Good();
+        $good->item = $validated['item'];
+        $good->brand_name = $request->input('brand_name');
+        $good->explanation = $validated['explanation'];
+        $good->condition = $validated['condition'];
+        $good->price = $validated['price'];
+        $good->image_url = $imagePath;
+        $good->user_id = auth()->id();
+        $good->save();
+
+        $good->categories()->sync($validated['category_ids']);
+
+        return redirect()->route('home');
     }
 }

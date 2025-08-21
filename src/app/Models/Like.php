@@ -14,4 +14,8 @@ class Like extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function good()
+    {
+        return $this->belongsTo(Good::class, 'goods_id');
+    }
 }

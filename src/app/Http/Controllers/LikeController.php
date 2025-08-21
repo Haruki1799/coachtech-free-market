@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Goods;
+use App\Models\Good;
 use App\Models\Like;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    public function store(Goods $goods)
+    public function store(Good $good)
     {
-        $goods->likes()->firstOrCreate([
+        $good->likes()->firstOrCreate([
             'user_id' => auth()->id(),
         ]);
 
         return back();
     }
 
-    public function destroy(Goods $goods)
+    public function destroy(Good $good)
     {
-        $goods->likes()->where('user_id', auth()->id())->delete();
+        $good->likes()->where('user_id', auth()->id())->delete();
 
         return back();
     }
