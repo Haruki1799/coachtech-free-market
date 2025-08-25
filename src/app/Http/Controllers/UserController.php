@@ -54,9 +54,9 @@ class UserController extends Controller
         }
 
         $user = User::with('address')->find(Auth::id());
-        $page = $request->input('page');
+        $tab = $request->input('tab'); // ← ここを変更
 
-        if ($page === 'mylist') {
+        if ($tab === 'buy') { // ← 条件も変更
             $orders = Order::with('goods')
                 ->where('user_id', Auth::id())
                 ->latest()

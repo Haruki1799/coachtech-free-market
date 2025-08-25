@@ -58,24 +58,7 @@
     margin: 20px 0;
 }
 
-.category-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.category-label {
-    font-weight: bold;
-    color: #555;
-    min-width: 100px;
-}
-
-.category-name {
-    color: #333;
-    font-size: 16px;
-}
-
+.category-row,
 .condition-row {
     display: flex;
     align-items: center;
@@ -83,12 +66,14 @@
     margin-top: 10px;
 }
 
+.category-label,
 .condition-label {
     font-weight: bold;
     color: #555;
     min-width: 100px;
 }
 
+.category-name,
 .condition-name {
     color: #333;
     font-size: 16px;
@@ -141,18 +126,13 @@
 .disabled-btn {
     cursor: not-allowed;
     opacity: 0.5;
+    pointer-events: none;
 }
 
 .reaction-count {
     font-size: 14px;
     color: #555;
     margin-top: 4px;
-}
-
-.disabled-btn {
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
 }
 
 .comment-block {
@@ -185,6 +165,7 @@
     color: #444;
     padding-left: 40px;
 }
+
 .category-tag {
     display: inline-block;
     background-color: #f8f8f8;
@@ -194,4 +175,77 @@
     padding: 4px 10px;
     margin-right: 6px;
     font-size: 13px;
+}
+
+/* PC対応（1400px〜1540px） */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .product-page {
+        gap: 48px;
+        padding: 30px;
+    }
+
+    .product-left {
+        max-width: 420px;
+    }
+
+    .price {
+        font-size: 26px;
+    }
+
+    .purchase-btn {
+        font-size: 18px;
+    }
+}
+
+/* タブレット対応（768px〜850px） */
+@media (min-width: 768px) and (max-width: 850px) {
+    .product-page {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .product-left {
+        flex: 1;
+        max-width: 320px;
+    }
+
+    .product-left img {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-right {
+        flex: 2;
+        gap: 16px;
+    }
+
+    .price {
+        font-size: 22px;
+    }
+
+    .purchase-btn {
+        font-size: 16px;
+        margin: 20px 0;
+    }
+
+    .description,
+    .info,
+    .comments {
+        padding: 12px;
+    }
+
+    .reaction-section {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .reaction-block {
+        width: 56px;
+    }
+
+    .comment-body {
+        padding-left: 36px;
+    }
 }

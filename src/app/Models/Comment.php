@@ -10,7 +10,7 @@ class Comment extends Model
 
     public function goods()
     {
-        return $this->belongsTo(Goods::class);
+        return $this->belongsTo(Good::class);
     }
 
     public function user()
