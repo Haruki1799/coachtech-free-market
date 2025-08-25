@@ -64,7 +64,6 @@
     height: 40px;
     border: 1px solid #ddd;
     border-radius: 3px;
-
     appearance: none;
 }
 
@@ -86,4 +85,53 @@
 .login__link {
     margin-top: 20px;
     text-align: center;
+}
+
+/* PC対応（1400px〜1540px） */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .form {
+        width: 50%;
+    }
+
+    .profile-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    .image-upload-label {
+        font-size: 13px;
+    }
+}
+
+/* タブレット対応（768px〜850px） */
+@media (min-width: 768px) and (max-width: 850px) {
+    .profile-image-section {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .image-upload-label {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .form {
+        width: 90%;
+    }
+
+    .form__input--text input {
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .form__button-submit {
+        height: 45px;
+        font-size: 16px;
+    }
 }

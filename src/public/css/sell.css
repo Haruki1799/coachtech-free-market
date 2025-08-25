@@ -1,3 +1,7 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
 .container {
     max-width: 600px;
     margin: 40px auto;
@@ -150,11 +154,57 @@ textarea {
 
 .error-message {
     color: red;
-
 }
 
 .required-label {
     color: red;
     font-size: 0.8rem;
     margin-left: 6px;
+}
+
+/* PC対応（1400px〜1540px） */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .container {
+        max-width: 640px;
+        padding: 30px;
+    }
+
+    .product-image {
+        width: 220px;
+    }
+
+    .submit-button {
+        font-size: 18px;
+    }
+}
+
+/* タブレット対応（768px〜850px） */
+@media (min-width: 768px) and (max-width: 850px) {
+    .container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .product-image {
+        width: 180px;
+    }
+
+    .image-upload-label {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .submit-button {
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+
+    .category-tag {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .product_information {
+        font-size: 18px;
+    }
 }

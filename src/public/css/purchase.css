@@ -148,3 +148,79 @@ body {
     color: #ff0000;
     text-align: left;
 }
+
+/* PC対応（1400px〜1540px） */
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .purchase-page {
+        gap: 48px;
+        padding: 40px;
+    }
+
+    .product-name {
+        font-size: 26px;
+    }
+
+    .product-price {
+        font-size: 22px;
+    }
+
+    .purchase-button {
+        font-size: 18px;
+    }
+}
+
+/* タブレット対応（768px〜850px） */
+@media (min-width: 768px) and (max-width: 850px) {
+    .purchase-page {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .purchase-left {
+        flex: 2;
+        min-width: 0;
+    }
+
+    .purchase-right {
+        flex: 1;
+        padding-left: 20px;
+        border-left: 1px solid #ccc;
+    }
+
+    .product-section {
+        flex-direction: row;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .product-image {
+        max-width: 200px;
+    }
+
+    .product-name {
+        font-size: 22px;
+    }
+
+    .product-price {
+        font-size: 18px;
+    }
+
+    .purchase-button {
+        font-size: 16px;
+    }
+
+    .summary-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .form-group select {
+        font-size: 15px;
+    }
+
+    .address-display {
+        font-size: 14px;
+    }
+}
