@@ -17,7 +17,7 @@ class CreateGoodsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('item',255);
-            $table->string('brand_name', 255);
+            $table->string('brand_name', 255)->nullable();
             $table->integer('price');
             $table->string('explanation', 255);
             $table->text('image_url');

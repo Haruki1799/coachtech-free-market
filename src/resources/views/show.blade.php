@@ -7,7 +7,11 @@
 @section('content')
 <div class="product-page">
     <div class="product-left">
-        <img src="{{ $good->image_url ?? 'placeholder.jpg' }}" alt="商品画像">
+        @if(Str::startsWith($good->image_url, 'http'))
+        <img src="{{ $good->image_url }}" alt="{{ $good->item }}">
+        @else
+        <img src="{{ asset('storage/' . $good->image_url) }}" alt="{{ $good->item }}">
+        @endif
     </div>
 
     <div class="product-right">

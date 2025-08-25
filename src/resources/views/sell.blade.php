@@ -11,9 +11,8 @@
     <form action="{{ route('goods.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        {{-- 商品画像 --}}
         <div class="form-group">
-            <label for="product_image">商品画像</label>
+            <label for="product_image">商品画像<span class="required-label">【必須】</span></label>
             <div class="product-image-section">
                 <img src="{{ isset($good) && $good->image_url ? asset('storage/' . $good->image_url) : asset('images/no-image.png') }}"
                     class="product-image"
@@ -24,13 +23,15 @@
                     <input type="file" name="image" id="product_image" hidden>
                 </label>
             </div>
+            @if ($errors->has('image'))
+            <div class="error-message">{{ $errors->first('image') }}</div>
+            @endif
         </div>
 
         <h2 class="product_information">商品の詳細</h2>
 
-        {{-- カテゴリー（複数選択） --}}
         <div class="category-container">
-            <h2 class="category-title">カテゴリー</h2>
+            <h2 class="category-title">カテゴリー<span class="required-label">【選択必須】</span></h2>
             <div class="category-list">
                 @foreach($categories as $category)
                 <label class="category-tag {{ in_array($category->id, old('category_ids', [])) ? 'selected' : '' }}">
@@ -40,11 +41,13 @@
                 </label>
                 @endforeach
             </div>
+            @if ($errors->has('category_ids'))
+            <div class="error-message">{{ $errors->first('category_ids') }}</div>
+            @endif
         </div>
 
-        {{-- 商品の状態 --}}
         <div class="form-group">
-            <label for="condition">商品の状態</label>
+            <label for="condition">商品の状態<span class="required-label">【必須】</span></label>
             <select name="condition" id="condition">
                 <option value="">選択してください</option>
                 <option value="新品" {{ old('condition') == '新品' ? 'selected' : '' }}>新品</option>
@@ -53,32 +56,44 @@
                 <option value="やや傷や汚れあり" {{ old('condition') == 'やや傷や汚れあり' ? 'selected' : '' }}>やや傷や汚れあり</option>
                 <option value="状態が悪い" {{ old('condition') == '状態が悪い' ? 'selected' : '' }}>状態が悪い</option>
             </select>
+            @if ($errors->has('condition'))
+            <div class="error-message">{{ $errors->first('condition') }}</div>
+            @endif
         </div>
 
         <h2 class="product_information">商品名と説明</h2>
 
-        {{-- 商品名・ブランド名・説明 --}}
         <div class="form-group">
-            <label for="item">商品名</label>
+            <label for="item">商品名<span class="required-label">【必須】</span></label>
             <input type="text" name="item" id="item" value="{{ old('item') }}">
+            @if ($errors->has('item'))
+            <div class="error-message">{{ $errors->first('item') }}</div>
+            @endif
 
             <label for="brand_name">ブランド名</label>
             <input type="text" name="brand_name" id="brand_name" value="{{ old('brand_name') }}">
+            @if ($errors->has('brand_name'))
+            <div class="error-message">{{ $errors->first('brand_name') }}</div>
+            @endif
 
-            <label for="explanation">商品の説明</label>
+            <label for="explanation">商品の説明<span class="required-label">【必須】</span></label>
             <textarea name="explanation" id="explanation" rows="4">{{ old('explanation') }}</textarea>
+            @if ($errors->has('explanation'))
+            <div class="error-message">{{ $errors->first('explanation') }}</div>
+            @endif
         </div>
 
-        {{-- 販売価格 --}}
         <div class="form-group">
-            <label for="price">販売価格</label>
+            <label for="price">販売価格<span class="required-label">【必須】</span></label>
             <div class="price-input">
                 <span>¥</span>
                 <input type="number" name="price" id="price" min="0" value="{{ old('price') }}">
             </div>
+            @if ($errors->has('price'))
+            <div class="error-message">{{ $errors->first('price') }}</div>
+            @endif
         </div>
 
-        {{-- 出品ボタン --}}
         <div class="form-group">
             <button type="submit" class="submit-button">出品する</button>
         </div>
