@@ -25,6 +25,9 @@
                     画像を選択する
                     <input type="file" name="profile_image" id="profile_image" hidden>
                 </label>
+                @if ($errors->has('profile_image'))
+                <div class="error-message">{{ $errors->first('profile_image') }}</div>
+                @endif
             </div>
 
             <div class="form__group-title">

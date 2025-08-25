@@ -25,11 +25,21 @@
 
 
 <div class="goods-list">
-    @foreach($goods as $item)
+    @foreach($goods as $good)
     <div class="goods-card">
-        <a href="{{ route('goods.show', $item->id) }}">
-            <div class="goods-image"><img src="{{ $item->image_url }}" alt="{{ $item->item }}"></div>
-            <div class="goods-name">{{ $item->item }}</div>
+        <a href="{{ route('goods.show', $good->id) }}">
+            <div class="goods-image">
+                @if(Str::startsWith($good->image_url, 'http'))
+                <img src="{{ $good->image_url }}" alt="{{ $good->item }}">
+                @else
+                <img src="{{ asset('storage/' . $good->image_url) }}" alt="{{ $good->item }}">
+                @endif
+
+                @if($good->isSold())
+                <div class="sold-label">SOLD</div>
+                @endif
+            </div>
+            <div class="goods-name">{{ $good->item }}</div>
         </a>
     </div>
     @endforeach

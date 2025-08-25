@@ -26,7 +26,7 @@ class ExhibitionRequest extends FormRequest
         return [
             'item' => ['required', 'string', 'max:255'],
             'explanation' => ['required', 'string', 'max:255'],
-            'image' => ['required', 'file', 'mimes:jpeg,png', 'max:2048'],
+            'image' => ['required', 'file', 'mimes:jpeg,png'],
             'category_ids' => ['required', 'array', 'min:1'],
             'category_ids.*' => ['exists:categories,id'],
             'condition' => ['required', 'string'],

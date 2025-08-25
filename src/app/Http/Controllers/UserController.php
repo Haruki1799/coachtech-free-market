@@ -53,7 +53,7 @@ class UserController extends Controller
             return redirect()->route('login')->withErrors(['auth' => 'ログインしてください']);
         }
 
-        $user = Auth::user()->load('address');
+        $user = User::with('address')->find(Auth::id());
         $page = $request->input('page');
 
         if ($page === 'mylist') {

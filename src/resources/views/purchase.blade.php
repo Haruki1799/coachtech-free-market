@@ -12,7 +12,11 @@
         <div class="purchase-left">
             <div class="product-section">
                 <div class="product-image">
-                    <img src="{{ $good->image_url ?? '/images/placeholder.png' }}" alt="商品画像">
+                    @if(Str::startsWith($good->image_url, 'http'))
+                    <img src="{{ $good->image_url }}" alt="{{ $good->item }}">
+                    @else
+                    <img src="{{ asset('storage/' . $good->image_url) }}" alt="{{ $good->item }}">
+                    @endif
                 </div>
 
                 <div class="product-info">
