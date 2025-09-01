@@ -43,9 +43,7 @@ Route::post('/mypage/profile/edit', [AddressController::class, 'store'])->name('
 Route::get('/sell', [ProductController::class, 'create'])->name('sell');
 
 Route::get('/', [GoodsController::class, 'index'])->name('home');
-Route::get('/item', [GoodsController::class, 'index']);
 Route::get('/item/{id}', [GoodsController::class, 'show'])->name('goods.show');
-Route::post('/item', [GoodsController::class, 'store'])->name('goods.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/purchase/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
