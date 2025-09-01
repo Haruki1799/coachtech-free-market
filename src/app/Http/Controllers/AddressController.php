@@ -17,6 +17,8 @@ class AddressController extends Controller
 
     public function store(AddressRequest $request)
     {
+        $validated = $request->validated();
+
         $user = Auth::user();
 
         $user->update([

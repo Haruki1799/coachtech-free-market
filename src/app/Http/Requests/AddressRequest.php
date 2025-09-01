@@ -28,6 +28,7 @@ class AddressRequest extends FormRequest
             'post_code' => ['required', 'regex:/^\d{3}-\d{4}$/'],
             'address' => ['required', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
+            'profile_image' => 'nullable|file|mimes:jpeg,png',
         ];
     }
     public function messages()
@@ -37,6 +38,7 @@ class AddressRequest extends FormRequest
             'post_code.required' => '郵便番号を入力してください',
             'post_code.regex' => 'ハイフンありの８文字で入力してください',
             'address.required' => '住所を入力してください',
+            'profile_image.mimes' => '画像は.jpegまたは.png形式でアップロードしてください。',
         ];
     }
 }

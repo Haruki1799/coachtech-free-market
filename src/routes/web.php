@@ -39,8 +39,7 @@ Route::post('/purchase/address/{item_id}', [AddressController::class, 'updateFor
 Route::get('/mypage/profile/edit', [AddressController::class, 'edit'])->name('address.edit.profile');
 Route::post('/mypage/profile/edit', [AddressController::class, 'store'])->name('address.update.profile');
 
-
-Route::get('/sell', [ProductController::class, 'create'])->name('sell');
+Route::get('/sell', [ProductController::class, 'create'])->middleware('auth')->name('sell');
 
 Route::get('/', [GoodsController::class, 'index'])->name('home');
 Route::get('/item/{id}', [GoodsController::class, 'show'])->name('goods.show');
@@ -70,4 +69,4 @@ Route::post('/goods/{good}/comments', [CommentController::class, 'store'])
 
 Route::get('/search', [ProductController::class, 'search'])->name('search');
 
-Route::post('/', [GoodsController::class, 'store'])->name('goods.store');
+Route::post('/sell', [GoodsController::class, 'store'])->name('goods.store');

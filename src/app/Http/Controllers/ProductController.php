@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $keyword = trim($request->input('keyword'));
-        $page = $request->input('page');
+        $tab = $request->input('tab');
 
         $query = Good::query();
 
@@ -26,7 +26,7 @@ class ProductController extends Controller
             $query->where('item', 'like', "%{$keyword}%");
         }
 
-        if ($page === 'mylist') {
+        if ($tab === 'mylist') {
             $query->whereHas('likes', function ($q) {
                 $q->where('user_id', auth()->id());
             });
