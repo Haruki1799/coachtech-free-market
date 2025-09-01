@@ -91,8 +91,13 @@
                 <h3>商品へのコメント</h3>
                 <form action="{{ route('comments.store', $good->id) }}" class="comment-form" method="POST">
                     @csrf
-                    <textarea name="body" required>{{ old('body') }}</textarea>
+                    <textarea name="body">{{ old('body') }}</textarea>
+                    @error('body')
+                    <div class="form__error">{{ $message }}</div>
+                    @enderror
+
                     <button type="submit">コメントを送信する</button>
+
                 </form>
             </div>
         </div>

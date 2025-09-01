@@ -25,11 +25,11 @@
                     画像を選択する
                     <input type="file" name="profile_image" id="profile_image" hidden>
                 </label>
-                @if ($errors->has('profile_image'))
-                <div class="error-message">{{ $errors->first('profile_image') }}</div>
-                @endif
-            </div>
 
+            </div>
+            <div class="form__error">
+                @error('profile_image') {{ $message }} @enderror
+            </div>
             <div class="form__group-title">
                 <span class="form__label--item">ユーザー名</span>
             </div>
@@ -93,12 +93,15 @@
 <script>
     document.getElementById('profile_image').addEventListener('change', function(e) {
         const file = e.target.files[0];
+        const preview = document.getElementById('preview-image');
+
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                document.getElementById('preview-image').src = event.target.result;
+                preview.src = event.target.result;
             };
             reader.readAsDataURL(file);
+        } else {
         }
     });
 </script>

@@ -54,9 +54,9 @@ class UserController extends Controller
         }
 
         $user = User::with('address')->find(Auth::id());
-        $tab = $request->input('tab'); // ← ここを変更
+        $tab = $request->input('tab');
 
-        if ($tab === 'buy') { // ← 条件も変更
+        if ($tab === 'buy') {
             $orders = Order::with('goods')
                 ->where('user_id', Auth::id())
                 ->latest()
@@ -66,10 +66,11 @@ class UserController extends Controller
                 return $good && $good->is_sold;
             });
         } else {
-            $goods = Good::where('user_id', Auth::id())->get();
+            $goods = Good::where('user_id', Auth::id())
+                ->latest()
+                ->get();
         }
 
         return view('mypage', compact('user', 'goods'));
     }
 }
-

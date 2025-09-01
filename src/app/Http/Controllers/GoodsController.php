@@ -10,7 +10,7 @@ class GoodsController extends Controller
 {
     public function index(Request $request)
     {
-        $page = $request->query('page');
+        $tab = $request->query('tab');
         $keyword = trim($request->query('keyword'));
 
         $query = Good::query()->withCount(['likes', 'comments']);
@@ -19,7 +19,7 @@ class GoodsController extends Controller
             $query->where('item', 'like', "%{$keyword}%");
         }
 
-        if ($page === 'mylist') {
+        if ($tab === 'mylist') {
             $query->whereHas('likes', function ($q) {
                 $q->where('user_id', auth()->id());
             });
