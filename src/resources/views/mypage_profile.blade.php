@@ -27,6 +27,7 @@
                 </label>
 
             </div>
+            <div class="form__error" id="profile-image-size-error"></div>
             <div class="form__error">
                 @error('profile_image') {{ $message }} @enderror
             </div>
@@ -94,14 +95,23 @@
     document.getElementById('profile_image').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const preview = document.getElementById('preview-image');
+        const errorDiv = document.getElementById('profile-image-size-error');
+
+        errorDiv.textContent = '';
 
         if (file && file.type.startsWith('image/')) {
+            if (file.size > 2 * 1024 * 1024) {
+                errorDiv.textContent = '画像サイズは2MB以下にしてください。';
+                e.target.value = '';
+                preview.src = "{{ asset('images/no-image.png') }}";
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function(event) {
                 preview.src = event.target.result;
             };
             reader.readAsDataURL(file);
-        } else {
         }
     });
 </script>
