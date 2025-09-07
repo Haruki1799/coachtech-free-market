@@ -23,6 +23,7 @@
                     <input type="file" name="image" id="product_image" hidden>
                 </label>
             </div>
+            <div class="error-message" id="image-size-error"></div>
             @if ($errors->has('image'))
             <div class="error-message">{{ $errors->first('image') }}</div>
             @endif
@@ -105,7 +106,19 @@
 <script>
     document.getElementById('product_image').addEventListener('change', function(e) {
         const file = e.target.files[0];
+        const errorDiv = document.getElementById('image-size-error');
+
+        errorDiv.textContent = '';
+
         if (file && file.type.startsWith('image/')) {
+
+            if (file.size > 2 * 1024 * 1024) {
+                errorDiv.textContent = '画像サイズは2MB以下にしてください。';
+                e.target.value = '';
+                document.getElementById('preview-image').src = "{{ asset('images/no-image.png') }}";
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function(event) {
                 document.getElementById('preview-image').src = event.target.result;
