@@ -10,6 +10,7 @@ use App\Models\Good;
 use App\Models\Order;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
 
 
 class UserController extends Controller
@@ -21,11 +22,18 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            if (!Auth::user()->hasVerifiedEmail()) {
+                Auth::logout();
+                return redirect()->route('verification.notice')
+                    ->withErrors(['email' => 'メール認証が必要です。']);
+            }
+
             return redirect()->route('home');
         }
 
         return back()->withErrors([
-            'email' => 'ログイン情報が登録されいません',
+            'email' => 'ログイン情報が正しくありません。',
         ]);
     }
 
@@ -38,6 +46,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        event(new Registered($user));
+
         auth()->login($user);
 
         return redirect()->route('mypage_profile');
@@ -45,8 +55,15 @@ class UserController extends Controller
 
     public function mypage_profile()
     {
-        return view('mypage_profile');
+        $user = Auth::user();
+        $address = $user->address;
+
+        return view('mypage_profile', [
+            'user' => $user,
+            'address' => $address,
+        ]);
     }
+
     public function mypage(Request $request)
     {
         if (!Auth::check()) {
