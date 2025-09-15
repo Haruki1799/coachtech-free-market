@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Good;
 use App\Models\Order;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Http\Requests\PurchaseRequest;
+use Stripe\StripeClient;
 
 class PurchaseController extends Controller
 {
@@ -45,13 +46,31 @@ class PurchaseController extends Controller
             ]
         );
 
-        Order::create([
-            'user_id' => $user->id,
-            'goods_id' => $good->id,
-            'payment_method' => $request->payment,
-            'post_code' => $user->address->post_code,
-            'address' => $user->address->address,
-            'building' => $user->address->building,
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        $session = $stripe->checkout->sessions->create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'unit_amount' => $good->price * 100,
+                    'product_data' => [
+                        'name' => $good->item,
+                    ],
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('purchase.success', ['item_id' => $item_id]),
+            'cancel_url' => route('purchase.cancel'),
+            'metadata' => [
+                'user_id' => $user->id,
+                'goods_id' => $good->id,
+                'payment_method' => $request->payment,
+                'post_code' => $validated['post_code'],
+                'address' => $validated['address'],
+                'building' => $validated['building'] ?? '',
+            ],
         ]);
 
         $good->is_sold = true;
@@ -66,6 +85,15 @@ class PurchaseController extends Controller
 
         session()->forget('temp_address');
 
-        return redirect()->route('home');
+        return redirect($session->url);
     }
+    public function success(Request $request)
+    {
+        return view('purchase.success');
+    }
+    public function cancel()
+    {
+        return view('purchase.cancel');
+    }
+
 }

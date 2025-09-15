@@ -67,3 +67,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
+Route::get('/success', [PurchaseController::class, 'success'])->name('purchase.success');
+Route::get('/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
