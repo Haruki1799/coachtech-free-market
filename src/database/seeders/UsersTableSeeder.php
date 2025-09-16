@@ -20,13 +20,15 @@ class UsersTableSeeder extends Seeder
         'name' => 'テストユーザー',
         'email' => 'test@example.com',
         'password' => Hash::make('password'),
+        'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
         $param = [
-            'id' => 2,
-            'name' => 'テストユーザー2',
-            'email' => 'test2@example.com',
-            'password' => Hash::make('password'),
+        'id' => 2,
+        'name' => 'テストユーザー2',
+        'email' => 'test2@example.com',
+        'password' => Hash::make('password'),
+        'email_verified_at' => now(),
         ];
         DB::table('users')->insert($param);
     }

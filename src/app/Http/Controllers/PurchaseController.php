@@ -89,6 +89,25 @@ class PurchaseController extends Controller
     }
     public function success(Request $request)
     {
+        $item_id = $request->input('item_id');
+        $user = Auth::user();
+        $good = Good::findOrFail($item_id);
+
+        $exists = Order::where('user_id', $user->id)
+            ->where('goods_id', $good->id)
+            ->exists();
+
+        if (!$exists) {
+            Order::create([
+                'user_id' => $user->id,
+                'goods_id' => $good->id,
+                'payment_method' => 'stripe',
+                'post_code' => $user->address->post_code,
+                'address' => $user->address->address,
+                'building' => $user->address->building,
+            ]);
+        }
+
         return view('purchase.success');
     }
     public function cancel()
