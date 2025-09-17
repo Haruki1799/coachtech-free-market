@@ -113,3 +113,4 @@ composer require stripe/stripe-php
 - 開発環境：http://localhost/
 - phpMyAdmin:：http://localhost:8080/
 - mailHog: http://localhost:8025/
+git
